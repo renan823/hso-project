@@ -1,25 +1,32 @@
+import { allowedExtensios } from "@/utils/allowedExtensios";
 import { readdir, writeFile } from "fs/promises";
 
-const extensios = ["csv"];
 const path = "./uploads/";
 
 class FileService {
+
     static async upload (file: File) {
 
-        const filename = new Date().toISOString().split(".")[0];
+        if (file) {
+            const filename = new Date().toISOString().split(".")[0];
 
-        let size = file.name.split(".").length;
-        const extension = file.name.split(".")[size-1];
+            let size = file.name.split(".").length;
+            const extension = file.name.split(".")[size-1];
 
-        if (!extensios.includes(extension)) {
-            throw new Error("Extensão de arquivo inválida");
+            if (!allowedExtensios.includes(extension)) {
+                return { success: false, message: "Extensão de arquivo inválida" };
+            }
+
+            const bytes = await file.arrayBuffer();
+
+            const buffer = Buffer.from(bytes);
+
+            await writeFile(`${path}${filename}.${extension}`, buffer);
+
+            return { success: true, message: "Arquivo salvo" };
+        } else {
+            return { success: false, message: "Nenhum arquivo enviado" };
         }
-
-        const bytes = await file.arrayBuffer();
-
-        const buffer = Buffer.from(bytes);
-
-        await writeFile(`${path}${filename}.${extension}`, buffer);
     }
 
     static async delete (filename: String) {
@@ -40,9 +47,9 @@ class FileService {
                 sortedByDay.hasOwnProperty(date) ?  sortedByDay[date] += 1 : sortedByDay[date] = 1;
             })
 
-            return { files: sortedByDay, amount: files.length };
+            return { success: true, files: sortedByDay, amount: files.length};
         } catch (error) {
-            throw new Error("Erro na leitura dos arquivos");
+            return { success: false, message: "Erro na leitura dos arquivos" };
         }
     }
 
@@ -50,9 +57,9 @@ class FileService {
         try {
             const files = await readdir(path);
 
-            return files;
+            return { files };
         } catch (error) {
-            throw new Error("Erro na leitura dos arquivos");
+            return { success: false, message: "Erro na leitura dos arquivos" };
         }
     }
 }

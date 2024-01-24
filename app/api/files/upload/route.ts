@@ -10,12 +10,7 @@ export async function POST (req: NextRequest) {
         return NextResponse.json({ success: false, message: "Nenhuma arquivo enviado" });
     }
 
-    try {
-        await FileService.upload(file);
+    const result = await FileService.upload(file);
 
-        return NextResponse.json({ success: true, message: "Arquivo salvo" });
-    } catch (error: any) {
-        console.log(error)
-        return NextResponse.json({ success: false, message: error.message || "Algo deu errado" })
-    }
+    return NextResponse.json(result);
 }
