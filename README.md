@@ -1,7 +1,7 @@
 # HSO       
 
 # Tarefas:
-- [ ] Upload de arquivos csv (direto na pasta)
+- [x] Upload de arquivos csv (direto na pasta)
 - [ ] Leitura do arquivo e conversão em Dataframe
 - [ ] Limpeza e manipulação do Dataframe 
 - [ ] Estruturação do Thesaurus
@@ -14,3 +14,4 @@
 - [ ] Criação da rede (com arquivo selecionado)
 - [ ] Sistema de login (?)
 - [ ] Implementação futura de busca de dados na web
+- [ ] Excluir arquivos
