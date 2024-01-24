@@ -7,8 +7,8 @@
 - [ ] Estruturação do Thesaurus
 - [ ] Implementação do Thesaurus com banco de dados
 - [ ] Manipulação do Thesaurus por inputs do usuário 
-- [ ] Listagem de todos os arquivos salvos 
-- [ ] Contagem de todos os arquivos salvos 
+- [x] Listagem de todos os arquivos salvos 
+- [x] Contagem de todos os arquivos salvos 
 - [ ] Consulta aos arquivos salvos
 - [ ] Substituição de sinônimos presentes nos arquivos 
 - [ ] Criação da rede (com arquivo selecionado)
