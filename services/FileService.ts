@@ -1,4 +1,4 @@
-import { writeFile } from "fs/promises";
+import { readdir, writeFile } from "fs/promises";
 
 const extensios = ["csv"];
 const path = "./uploads/";
@@ -23,7 +23,37 @@ class FileService {
     }
 
     static async delete (filename: String) {
+        return;
+    }
 
+    static async count () {
+        try {
+            const files = await readdir(path);
+
+            const sortedByDay: Record<string, number> = {};
+
+            files.forEach((file) => {
+                const [year, month, day] = file.split("T")[0].split("-");
+
+                const date = `${day}/${month}/${year}`;
+
+                sortedByDay.hasOwnProperty(date) ?  sortedByDay[date] += 1 : sortedByDay[date] = 1;
+            })
+
+            return { files: sortedByDay, amount: files.length };
+        } catch (error) {
+            throw new Error("Erro na leitura dos arquivos");
+        }
+    }
+
+    static async fetchAll () {
+        try {
+            const files = await readdir(path);
+
+            return files;
+        } catch (error) {
+            throw new Error("Erro na leitura dos arquivos");
+        }
     }
 }
 
